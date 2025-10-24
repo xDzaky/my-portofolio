@@ -1,0 +1,205 @@
+{
+  "skills": [
+    {
+      "name": "HTML",
+      "category": "Languages",
+      "level": "Advanced",
+      "frequency": "Daily",
+      "since": 2020,
+      "projects": 18,
+      "lastUsed": "2025-01-28",
+      "links": [
+        {
+          "type": "demo",
+          "url": "https://linktree-dzaky.vercel.app"
+        }
+      ],
+      "description": "Language",
+      "icon": "/tools/html.png"
+    },
+    {
+      "name": "CSS",
+      "category": "Languages",
+      "level": "Advanced",
+      "frequency": "Daily",
+      "since": 2020,
+      "projects": 18,
+      "lastUsed": "2025-01-26",
+      "links": [
+        {
+          "type": "demo",
+          "url": "https://responsive-menu-landing.vercel.app"
+        }
+      ],
+      "description": "Language",
+      "icon": "/tools/css.png"
+    },
+    {
+      "name": "JavaScript",
+      "category": "Languages",
+      "level": "Advanced",
+      "frequency": "Daily",
+      "since": 2021,
+      "projects": 12,
+      "lastUsed": "2025-01-24",
+      "links": [
+        {
+          "type": "repo",
+          "url": "https://github.com/xDzaky/linktree-dzaky"
+        }
+      ],
+      "description": "Language",
+      "icon": "/tools/js.png"
+    },
+    {
+      "name": "Python",
+      "category": "Languages",
+      "level": "Foundational",
+      "frequency": "Occasionally",
+      "since": 2022,
+      "projects": 2,
+      "lastUsed": "2024-11-12",
+      "description": "Language",
+      "icon": "/tools/python.png"
+    },
+    {
+      "name": "Next.js",
+      "category": "Frameworks",
+      "level": "Intermediate",
+      "frequency": "Weekly",
+      "since": 2023,
+      "projects": 5,
+      "lastUsed": "2025-01-20",
+      "links": [
+        {
+          "type": "repo",
+          "url": "https://github.com/xDzaky/portofolio-codex"
+        }
+      ],
+      "description": "Framework",
+      "icon": "/tools/nextjs.png"
+    },
+    {
+      "name": "React",
+      "category": "Frameworks",
+      "level": "Intermediate",
+      "frequency": "Weekly",
+      "since": 2023,
+      "projects": 5,
+      "lastUsed": "2025-01-18",
+      "description": "Framework",
+      "icon": "/tools/reactjs.png"
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "Frameworks",
+      "level": "Advanced",
+      "frequency": "Daily",
+      "since": 2021,
+      "projects": 10,
+      "lastUsed": "2025-01-28",
+      "description": "Framework",
+      "icon": "/tools/tailwind.png"
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend",
+      "level": "Intermediate",
+      "frequency": "Weekly",
+      "since": 2023,
+      "projects": 3,
+      "lastUsed": "2024-12-05",
+      "description": "JavaScript Runtime",
+      "icon": "/tools/nodejs.png"
+    },
+    {
+      "name": "Express",
+      "category": "Backend",
+      "level": "Foundational",
+      "frequency": "Occasionally",
+      "since": 2023,
+      "projects": 2,
+      "lastUsed": "2024-09-14",
+      "description": "Framework",
+      "icon": "/tools/express.png"
+    },
+    {
+      "name": "Google Apps Script",
+      "category": "Backend",
+      "level": "Advanced",
+      "frequency": "Weekly",
+      "since": 2022,
+      "projects": 4,
+      "lastUsed": "2025-01-30",
+      "links": [
+        {
+          "type": "repo",
+          "url": "https://github.com/xDzaky/DAKEMBAR"
+        }
+      ],
+      "description": "Automation",
+      "icon": "/tools/google-apps-script.png"
+    },
+    {
+      "name": "Git",
+      "category": "Tools",
+      "level": "Advanced",
+      "frequency": "Daily",
+      "since": 2019,
+      "projects": 22,
+      "lastUsed": "2025-01-28",
+      "description": "Repository",
+      "icon": "/tools/github.png"
+    },
+    {
+      "name": "Vercel",
+      "category": "Tools",
+      "level": "Advanced",
+      "frequency": "Weekly",
+      "since": 2023,
+      "projects": 8,
+      "lastUsed": "2025-01-22",
+      "description": "Platform",
+      "icon": "/tools/vercel.png"
+    },
+    {
+      "name": "Figma",
+      "category": "Tools",
+      "level": "Intermediate",
+      "frequency": "Daily",
+      "since": 2020,
+      "projects": 15,
+      "lastUsed": "2025-01-25",
+      "description": "Design App",
+      "icon": "/tools/figma.png"
+    },
+    {
+      "name": "Canva",
+      "category": "Tools",
+      "level": "Intermediate",
+      "frequency": "Occasionally",
+      "since": 2018,
+      "projects": 9,
+      "lastUsed": "2024-12-18",
+      "description": "Design App",
+      "icon": "/tools/canva.png"
+    },
+    {
+      "name": "Ethers.js",
+      "category": "Web3",
+      "level": "Foundational",
+      "frequency": "Learning",
+      "since": 2024,
+      "projects": 1,
+      "lastUsed": "2024-10-15",
+      "links": [
+        {
+          "type": "demo",
+          "url": "https://defi-dashboard-concept.vercel.app"
+        }
+      ],
+      "description": "Web3 Library",
+      "icon": "/tools/ethers-js.png"
+    }
+  ]
+}
