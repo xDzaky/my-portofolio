@@ -12,7 +12,7 @@ type SegmentedMeterProps = {
 };
 
 export function SegmentedMeter({ segments = 4, filled, className }: SegmentedMeterProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.6 });
   const [hasAnimated, setHasAnimated] = useState(prefersReducedMotion);

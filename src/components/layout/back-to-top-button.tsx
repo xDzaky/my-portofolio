@@ -5,7 +5,7 @@ import { ArrowUp } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export function BackToTopButton() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   const handleClick = useCallback(() => {
     if (typeof window === "undefined") return;

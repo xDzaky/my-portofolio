@@ -28,7 +28,7 @@ import { SiteName } from "@/components/shared/site-name";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 120,

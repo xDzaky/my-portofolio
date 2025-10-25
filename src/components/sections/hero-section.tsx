@@ -15,7 +15,7 @@ import ScrollVelocity from "./ScrollVelocity";
 const MotionButton = motion(Button);
 
 export function HeroSection() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const velocity = prefersReducedMotion ? 0 : 60;
 
   const gradientHeadingClass = cn(

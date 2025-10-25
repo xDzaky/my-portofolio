@@ -71,7 +71,7 @@ function FloatingField({ id, label, type = "text", required, register, component
 export function ContactForm() {
   const form = useForm<FormValues>();
   const { register, handleSubmit, reset } = form;
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 

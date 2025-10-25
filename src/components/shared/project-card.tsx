@@ -20,7 +20,7 @@ const categoryLabel: Record<NonNullable<ProjectFrontmatter["category"]>, string>
 };
 
 export function ProjectCard({ project, index = 0 }: Props) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const category = project.category ? categoryLabel[project.category] : null;
 
   return (

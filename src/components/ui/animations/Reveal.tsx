@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import type { HTMLMotionProps } from "framer-motion";
+import type { ForwardRefComponent, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -25,9 +25,13 @@ export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
   },
   ref,
 ) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
-  const MotionComponent = (motion as Record<string, typeof motion.div>)[as] ?? motion.div;
+  const motionComponents = motion as unknown as Record<
+    MotionTag,
+    ForwardRefComponent<any, HTMLMotionProps<any>>
+  >;
+  const MotionComponent = motionComponents[as] ?? motion.div;
 
   const defaultInitial = prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24 };
   const defaultWhileInView = { opacity: 1, y: 0 };

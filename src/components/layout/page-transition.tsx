@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export function PageTransition({ children }: PropsWithChildren) {
   const pathname = usePathname();
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   return (
     <motion.div

@@ -29,7 +29,7 @@ type SkillBadgeProps = {
 };
 
 export function SkillBadge({ name, level, frequency, icon, className }: SkillBadgeProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>

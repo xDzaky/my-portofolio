@@ -2,8 +2,14 @@
 
 import { forwardRef, useCallback } from "react";
 import type { MouseEventHandler } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
-import type { HTMLMotionProps } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import type { ForwardRefComponent, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -29,12 +35,16 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
   },
   ref,
 ) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const rotateX = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
   const rotateY = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
   const glowX = useMotionValue(50);
 
-  const MotionComponent = (motion as Record<string, typeof motion.div>)[as] ?? motion.div;
+  const motionComponents = motion as unknown as Record<
+    MotionTag,
+    ForwardRefComponent<any, HTMLMotionProps<any>>
+  >;
+  const MotionComponent = motionComponents[as] ?? motion.div;
 
   const glowTranslateX = useTransform(glowX, [0, 100], [-30, 30]);
   const glowOpacity = useTransform(glowX, [0, 50, 100], [0.1, 0.4, 0.1]);
