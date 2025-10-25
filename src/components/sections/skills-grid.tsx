@@ -14,7 +14,7 @@ type SkillsGridProps = {
 };
 
 export function SkillsGrid({ skills, categoryOrder, limit }: SkillsGridProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   const orderedSkills = useMemo(() => {
     const categoryIndex = new Map<string, number>();
