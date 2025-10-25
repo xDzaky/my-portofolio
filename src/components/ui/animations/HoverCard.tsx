@@ -1,7 +1,13 @@
 "use client";
 
 import { forwardRef, useCallback } from "react";
-import type { ElementRef, ForwardedRef, MouseEventHandler, ReactElement, Ref } from "react";
+import type {
+  ElementRef,
+  ForwardedRef,
+  MouseEventHandler,
+  ReactElement,
+  Ref,
+} from "react";
 import {
   motion,
   useMotionValue,
@@ -13,7 +19,7 @@ import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-type MotionTag = keyof DOMMotionComponents;
+type MotionTag = Extract<keyof DOMMotionComponents, keyof HTMLElementTagNameMap>;
 
 type HoverCardProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, "ref"> & {
   as?: Tag;
