@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactElement } from "react";
 import { useMemo, useRef, useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { GraduationCap, School, BookOpen } from "lucide-react";
@@ -59,7 +59,7 @@ function formatPeriod(start: string, end: string | null) {
   return `${startLabel.toUpperCase()} — ${endLabel.toUpperCase()}`;
 }
 
-const educationIconMap: Record<string, JSX.Element> = {
+const educationIconMap: Record<string, ReactElement> = {
   smk: <School className="h-4 w-4" />,
   sma: <School className="h-4 w-4" />,
   "smk negeri 1 kota probolinggo": <School className="h-4 w-4" />,
