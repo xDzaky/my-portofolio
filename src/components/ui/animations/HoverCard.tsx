@@ -49,7 +49,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
   const handleMouseMove = useCallback<MouseEventHandler<HTMLElement>>(
     (event) => {
       if (prefersReducedMotion) {
-        onMouseMove?.(event);
+        (onMouseMove as MouseEventHandler<HTMLElement> | undefined)?.(event);
         return;
       }
 
@@ -68,9 +68,9 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       rotateY.set(tiltY);
       glowX.set(percentX);
 
-      onMouseMove?.(event);
+      (onMouseMove as MouseEventHandler<HTMLElement> | undefined)?.(event);
     },
-    [glowX, onMouseMove, prefersReducedMotion, rotateX, rotateY, tilt],
+    [glowX, prefersReducedMotion, rotateX, rotateY, tilt, onMouseMove],
   );
 
   const handleMouseLeave = useCallback<MouseEventHandler<HTMLElement>>(
@@ -78,7 +78,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       rotateX.set(0);
       rotateY.set(0);
       glowX.set(50);
-      onMouseLeave?.(event);
+      (onMouseLeave as MouseEventHandler<HTMLElement> | undefined)?.(event);
     },
     [glowX, onMouseLeave, rotateX, rotateY],
   );
