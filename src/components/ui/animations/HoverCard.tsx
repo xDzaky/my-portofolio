@@ -27,12 +27,6 @@ type HoverCardProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, 
   enableGlow?: boolean;
 };
 
-type HoverCardMouseEvent<Tag extends MotionTag> =
-  HoverCardProps<Tag>["onMouseMove"] extends (event: infer Event) => unknown ? Event : never;
-
-type HoverCardMouseLeaveEvent<Tag extends MotionTag> =
-  HoverCardProps<Tag>["onMouseLeave"] extends (event: infer Event) => unknown ? Event : never;
-
 function HoverCardInner<Tag extends MotionTag = "div">(
   {
     as = "div" as Tag,
@@ -47,6 +41,8 @@ function HoverCardInner<Tag extends MotionTag = "div">(
   }: HoverCardProps<Tag>,
   ref: ForwardedRef<ElementRef<DOMMotionComponents[Tag]>>,
 ) {
+  type HoverElement = ElementRef<DOMMotionComponents[Tag]>;
+
   const prefersReducedMotion = useReducedMotion() ?? false;
   const rotateX = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
   const rotateY = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
@@ -58,10 +54,11 @@ function HoverCardInner<Tag extends MotionTag = "div">(
   const glowTranslateX = useTransform(glowX, [0, 100], [-30, 30]);
   const glowOpacity = useTransform(glowX, [0, 50, 100], [0.1, 0.4, 0.1]);
 
-  const handleMouseMove = useCallback<MouseEventHandler<HTMLElement>>(
+  const handleMouseMove = useCallback<MouseEventHandler<HoverElement>>(
     (event) => {
+      const handler = onMouseMove as MouseEventHandler<HoverElement> | undefined;
       if (prefersReducedMotion) {
-        onMouseMove?.(event as HoverCardMouseEvent<Tag>);
+        handler?.(event);
         return;
       }
 
@@ -80,17 +77,18 @@ function HoverCardInner<Tag extends MotionTag = "div">(
       rotateY.set(tiltY);
       glowX.set(percentX);
 
-      onMouseMove?.(event as HoverCardMouseEvent<Tag>);
+      handler?.(event);
     },
     [glowX, prefersReducedMotion, rotateX, rotateY, tilt, onMouseMove],
   );
 
-  const handleMouseLeave = useCallback<MouseEventHandler<HTMLElement>>(
+  const handleMouseLeave = useCallback<MouseEventHandler<HoverElement>>(
     (event) => {
+      const handler = onMouseLeave as MouseEventHandler<HoverElement> | undefined;
       rotateX.set(0);
       rotateY.set(0);
       glowX.set(50);
-      onMouseLeave?.(event as HoverCardMouseLeaveEvent<Tag>);
+      handler?.(event);
     },
     [glowX, onMouseLeave, rotateX, rotateY],
   );
