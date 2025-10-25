@@ -13,7 +13,7 @@ import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-type MotionTag = keyof typeof motion;
+type MotionTag = keyof DOMMotionComponents;
 
 type HoverCardProps = Omit<HTMLMotionProps<"div">, "ref"> & {
   as?: MotionTag;
