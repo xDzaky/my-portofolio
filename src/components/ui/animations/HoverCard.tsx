@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useCallback } from "react";
-import type { MouseEventHandler } from "react";
+import type { ElementRef, ForwardedRef, MouseEventHandler, ReactElement, Ref } from "react";
 import {
   motion,
   useMotionValue,
@@ -15,15 +15,21 @@ import { cn } from "@/lib/utils";
 
 type MotionTag = keyof DOMMotionComponents;
 
-type HoverCardProps = Omit<HTMLMotionProps<"div">, "ref"> & {
-  as?: MotionTag;
+type HoverCardProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, "ref"> & {
+  as?: Tag;
   tilt?: number;
   enableGlow?: boolean;
 };
 
-export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverCard(
+type HoverCardMouseEvent<Tag extends MotionTag> =
+  HoverCardProps<Tag>["onMouseMove"] extends (event: infer Event) => unknown ? Event : never;
+
+type HoverCardMouseLeaveEvent<Tag extends MotionTag> =
+  HoverCardProps<Tag>["onMouseLeave"] extends (event: infer Event) => unknown ? Event : never;
+
+function HoverCardInner<Tag extends MotionTag = "div">(
   {
-    as = "div",
+    as = "div" as Tag,
     className,
     style,
     tilt = 10,
@@ -32,8 +38,8 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
     onMouseLeave,
     children,
     ...rest
-  },
-  ref,
+  }: HoverCardProps<Tag>,
+  ref: ForwardedRef<ElementRef<DOMMotionComponents[Tag]>>,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
   const rotateX = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
@@ -49,7 +55,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
   const handleMouseMove = useCallback<MouseEventHandler<HTMLElement>>(
     (event) => {
       if (prefersReducedMotion) {
-        (onMouseMove as MouseEventHandler<HTMLElement> | undefined)?.(event);
+        onMouseMove?.(event as HoverCardMouseEvent<Tag>);
         return;
       }
 
@@ -68,7 +74,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       rotateY.set(tiltY);
       glowX.set(percentX);
 
-      (onMouseMove as MouseEventHandler<HTMLElement> | undefined)?.(event);
+      onMouseMove?.(event as HoverCardMouseEvent<Tag>);
     },
     [glowX, prefersReducedMotion, rotateX, rotateY, tilt, onMouseMove],
   );
@@ -78,14 +84,14 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       rotateX.set(0);
       rotateY.set(0);
       glowX.set(50);
-      (onMouseLeave as MouseEventHandler<HTMLElement> | undefined)?.(event);
+      onMouseLeave?.(event as HoverCardMouseLeaveEvent<Tag>);
     },
     [glowX, onMouseLeave, rotateX, rotateY],
   );
 
   return (
     <MotionComponent
-      ref={ref as never}
+      ref={ref}
       className={cn("relative will-change-transform", className)}
       style={{
         ...style,
@@ -96,7 +102,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       transition={{ type: "spring", stiffness: 160, damping: 18, mass: 0.2 }}
-      {...rest}
+      {...(rest as HTMLMotionProps<Tag>)}
     >
       {enableGlow && !prefersReducedMotion ? (
         <motion.span
@@ -116,6 +122,14 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
       </div>
     </MotionComponent>
   );
-});
+}
+
+export const HoverCard = forwardRef(HoverCardInner) as <
+  Tag extends MotionTag = "div"
+>(
+  props: HoverCardProps<Tag> & {
+    ref?: Ref<ElementRef<DOMMotionComponents[Tag]>>;
+  },
+) => ReactElement | null;
 
 export type { HoverCardProps };
