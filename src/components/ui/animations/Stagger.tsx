@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import type { ForwardRefComponent, HTMLMotionProps } from "framer-motion";
+import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -34,10 +34,7 @@ export const Stagger = forwardRef<HTMLElement, StaggerProps>(function Stagger(
   ref,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
-  const motionComponents = motion as unknown as Record<
-    MotionTag,
-    ForwardRefComponent<any, HTMLMotionProps<any>>
-  >;
+  const motionComponents = motion as unknown as DOMMotionComponents;
   const MotionComponent = motionComponents[as] ?? motion.div;
 
   const containerVariants = variants ?? {
@@ -79,10 +76,7 @@ export const StaggerItem = forwardRef<HTMLElement, StaggerItemProps>(function St
   ref,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
-  const motionComponents = motion as unknown as Record<
-    MotionTag,
-    ForwardRefComponent<any, HTMLMotionProps<any>>
-  >;
+  const motionComponents = motion as unknown as DOMMotionComponents;
   const MotionComponent = motionComponents[as] ?? motion.div;
 
   const itemVariants = variants ??

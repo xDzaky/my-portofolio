@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import type { ForwardRefComponent, HTMLMotionProps } from "framer-motion";
+import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -40,10 +40,7 @@ export const HoverCard = forwardRef<HTMLElement, HoverCardProps>(function HoverC
   const rotateY = useSpring(0, { stiffness: 180, damping: 16, mass: 0.2 });
   const glowX = useMotionValue(50);
 
-  const motionComponents = motion as unknown as Record<
-    MotionTag,
-    ForwardRefComponent<any, HTMLMotionProps<any>>
-  >;
+  const motionComponents = motion as unknown as DOMMotionComponents;
   const MotionComponent = motionComponents[as] ?? motion.div;
 
   const glowTranslateX = useTransform(glowX, [0, 100], [-30, 30]);
