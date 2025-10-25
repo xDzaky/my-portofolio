@@ -147,7 +147,7 @@ export function EducationVerticalTimeline({ items }: EducationVerticalTimelinePr
         lineColor="transparent" // Hide original line
         className="[&_.vertical-timeline-element]:!mt-16 [&_.vertical-timeline-element-content]:!bg-transparent [&_.vertical-timeline-element-content]:!shadow-none [&_.vertical-timeline-element-content]:!p-0 [&_.vertical-timeline-element-icon]:!shadow-[0_0_0_4px_var(--icon-glow)]"
       >
-        {timelineItems.map((item, index) => {
+        {timelineItems.map((item) => {
           const iconStyle: CSSProperties = {
             background: palette.iconBackground,
             boxShadow: `0 12px 32px -12px ${palette.iconGlow}`,
