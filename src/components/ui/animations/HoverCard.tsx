@@ -62,7 +62,11 @@ function HoverCardInner<Tag extends MotionTag = "div">(
         return;
       }
 
-      const target = event.currentTarget as HTMLElement;
+      const target = event.currentTarget;
+      if (!(target instanceof HTMLElement)) {
+        handler?.(event);
+        return;
+      }
       const rect = target.getBoundingClientRect();
       const offsetX = event.clientX - rect.left;
       const offsetY = event.clientY - rect.top;
