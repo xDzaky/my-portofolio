@@ -2,6 +2,7 @@
 
 import { forwardRef, useCallback } from "react";
 import type {
+  ElementType,
   ElementRef,
   ForwardedRef,
   MouseEventHandler,
@@ -49,7 +50,7 @@ function HoverCardInner<Tag extends MotionTag = "div">(
   const glowX = useMotionValue(50);
 
   const motionComponents = motion as unknown as DOMMotionComponents;
-  const MotionComponent = motionComponents[as] ?? motion.div;
+  const MotionComponent = (motionComponents[as] ?? motion.div) as ElementType;
 
   const glowTranslateX = useTransform(glowX, [0, 100], [-30, 30]);
   const glowOpacity = useTransform(glowX, [0, 50, 100], [0.1, 0.4, 0.1]);
