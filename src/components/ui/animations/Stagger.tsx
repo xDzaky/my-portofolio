@@ -1,26 +1,33 @@
 "use client";
 
 import { forwardRef } from "react";
+import type {
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  Ref,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-type MotionTag = keyof DOMMotionComponents;
+type MotionTag = Extract<keyof DOMMotionComponents, keyof HTMLElementTagNameMap>;
 
-type StaggerProps = Omit<HTMLMotionProps<"div">, "ref"> & {
-  as?: MotionTag;
+type StaggerProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, "ref"> & {
+  as?: Tag;
   delayChildren?: number;
   staggerChildren?: number;
 };
 
-type StaggerItemProps = Omit<HTMLMotionProps<"div">, "ref"> & {
-  as?: MotionTag;
+type StaggerItemProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, "ref"> & {
+  as?: Tag;
 };
 
-export const Stagger = forwardRef<HTMLElement, StaggerProps>(function Stagger(
+function StaggerInner<Tag extends MotionTag = "div">(
   {
-    as = "div",
+    as = "div" as Tag,
     className,
     variants,
     initial,
@@ -30,12 +37,12 @@ export const Stagger = forwardRef<HTMLElement, StaggerProps>(function Stagger(
     staggerChildren = 0.08,
     children,
     ...rest
-  },
-  ref,
+  }: StaggerProps<Tag>,
+  ref: ForwardedRef<ElementRef<DOMMotionComponents[Tag]>>,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
   const motionComponents = motion as unknown as DOMMotionComponents;
-  const MotionComponent = motionComponents[as] ?? motion.div;
+  const MotionComponent = (motionComponents[as] ?? motion.div) as ElementType;
 
   const containerVariants = variants ?? {
     hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 },
@@ -58,26 +65,26 @@ export const Stagger = forwardRef<HTMLElement, StaggerProps>(function Stagger(
 
   return (
     <MotionComponent
-      ref={ref as never}
+      ref={ref}
       className={cn(className)}
       variants={containerVariants}
       initial={initial ?? "hidden"}
       whileInView={whileInView ?? "visible"}
       viewport={viewport ?? defaultViewport}
-      {...rest}
+      {...(rest as HTMLMotionProps<Tag>)}
     >
       {children}
     </MotionComponent>
   );
-});
+}
 
-export const StaggerItem = forwardRef<HTMLElement, StaggerItemProps>(function StaggerItem(
-  { as = "div", className, variants, children, ...rest },
-  ref,
+function StaggerItemInner<Tag extends MotionTag = "div">(
+  { as = "div" as Tag, className, variants, children, ...rest }: StaggerItemProps<Tag>,
+  ref: ForwardedRef<ElementRef<DOMMotionComponents[Tag]>>,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
   const motionComponents = motion as unknown as DOMMotionComponents;
-  const MotionComponent = motionComponents[as] ?? motion.div;
+  const MotionComponent = (motionComponents[as] ?? motion.div) as ElementType;
 
   const itemVariants = variants ??
     (prefersReducedMotion
@@ -95,10 +102,31 @@ export const StaggerItem = forwardRef<HTMLElement, StaggerItemProps>(function St
         });
 
   return (
-    <MotionComponent ref={ref as never} className={cn(className)} variants={itemVariants} {...rest}>
+    <MotionComponent
+      ref={ref}
+      className={cn(className)}
+      variants={itemVariants}
+      {...(rest as HTMLMotionProps<Tag>)}
+    >
       {children}
     </MotionComponent>
   );
-});
+}
+
+export const Stagger = forwardRef(StaggerInner) as <
+  Tag extends MotionTag = "div"
+>(
+  props: StaggerProps<Tag> & {
+    ref?: Ref<ElementRef<DOMMotionComponents[Tag]>>;
+  },
+) => ReactElement | null;
+
+export const StaggerItem = forwardRef(StaggerItemInner) as <
+  Tag extends MotionTag = "div"
+>(
+  props: StaggerItemProps<Tag> & {
+    ref?: Ref<ElementRef<DOMMotionComponents[Tag]>>;
+  },
+) => ReactElement | null;
 
 export type { StaggerProps, StaggerItemProps };

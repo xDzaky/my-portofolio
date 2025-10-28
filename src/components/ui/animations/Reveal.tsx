@@ -1,20 +1,27 @@
 "use client";
 
 import { forwardRef } from "react";
+import type {
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  Ref,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { DOMMotionComponents, HTMLMotionProps } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-type MotionTag = keyof DOMMotionComponents;
+type MotionTag = Extract<keyof DOMMotionComponents, keyof HTMLElementTagNameMap>;
 
-type RevealProps = Omit<HTMLMotionProps<"div">, "ref"> & {
-  as?: MotionTag;
+type RevealProps<Tag extends MotionTag = "div"> = Omit<HTMLMotionProps<Tag>, "ref"> & {
+  as?: Tag;
 };
 
-export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
+function RevealInner<Tag extends MotionTag = "div">(
   {
-    as = "div",
+    as = "div" as Tag,
     className,
     initial,
     whileInView,
@@ -22,13 +29,13 @@ export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
     viewport,
     children,
     ...rest
-  },
-  ref,
+  }: RevealProps<Tag>,
+  ref: ForwardedRef<ElementRef<DOMMotionComponents[Tag]>>,
 ) {
   const prefersReducedMotion = useReducedMotion() ?? false;
 
   const motionComponents = motion as unknown as DOMMotionComponents;
-  const MotionComponent = motionComponents[as] ?? motion.div;
+  const MotionComponent = (motionComponents[as] ?? motion.div) as ElementType;
 
   const defaultInitial = prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24 };
   const defaultWhileInView = { opacity: 1, y: 0 };
@@ -39,17 +46,25 @@ export const Reveal = forwardRef<HTMLElement, RevealProps>(function Reveal(
 
   return (
     <MotionComponent
-      ref={ref as never}
+      ref={ref}
       className={cn(className)}
       initial={initial ?? defaultInitial}
       whileInView={whileInView ?? defaultWhileInView}
       transition={transition ?? defaultTransition}
       viewport={viewport ?? defaultViewport}
-      {...rest}
+      {...(rest as HTMLMotionProps<Tag>)}
     >
       {children}
     </MotionComponent>
   );
-});
+}
+
+export const Reveal = forwardRef(RevealInner) as <
+  Tag extends MotionTag = "div"
+>(
+  props: RevealProps<Tag> & {
+    ref?: Ref<ElementRef<DOMMotionComponents[Tag]>>;
+  },
+) => ReactElement | null;
 
 export type { RevealProps };
