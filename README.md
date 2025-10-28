@@ -1,41 +1,78 @@
-Modern portfolio for Dzaky, built per tech_doc.md.
+# Portofolio Dzaky
 
-Tech stack
-- Next.js 15 (App Router), TypeScript
-- Tailwind CSS v4 + shadcn/ui
-- Framer Motion (animations)
-- next-themes (dark/light)
-- Route Handlers (contact email via Resend)
-- Vercel Analytics
+Website pribadi modern untuk menampilkan proyek, pengalaman, dan keahlian Dzaky. Dibangun dengan Next.js 15, Tailwind CSS, dan Framer Motion untuk menghadirkan pengalaman yang halus, responsif, dan siap produksi di Vercel.
 
-Getting started
-- Install: `npm i`
-- Dev server: `npm run dev`
-- Build: `npm run build`
-- Start: `npm start`
+## 📸 Pratinjau
 
-Environment
-- `RESEND_API_KEY` (optional): enables email sending for `/api/contact`.
+![Tampilan Halaman Utama](./public/images/screenshots/portfolio-home.png)
 
-Project structure (key files)
-- `src/app/page.tsx`: Home (Hero, Projects, Skills previews)
-- `src/app/{about,education,projects,skills,blog,contact}/page.tsx`: Core pages
-- `src/app/projects/[slug]/page.tsx`: Project case study route
-- `src/app/blog/[slug]/page.tsx`: Blog post route (placeholder)
-- `src/app/api/contact/route.ts`: Sends email w/ simple rate limit + honeypot
-- `src/app/{sitemap.ts,robots.ts,opengraph-image.tsx}`: SEO basics
-- `src/components/layout/*`: Header/Footer
-- `src/components/sections/*`: Hero, previews, contact form
-- `src/config/*`: Site and navigation config
-- `src/data/*`: Sample content (projects, skills, blog, education)
+> Ganti `public/images/screenshots/portfolio-home.png` dengan screenshot terbaru situs kamu agar tampilan di README selalu akurat.
 
-Notes and roadmap
-- MDX/Contentlayer: deferred (Next 15 peer-compat issues). Current site uses static data. If you want MDX, we can pin Next to 13/14 or use a compatible content loader.
-- Social integrations (GitHub/YouTube), testimonials page, i18n, and Playwright tests are planned for V2.
-- Add your resume file to `public/resume.pdf` to enable `/resume` link.
+## ✨ Fitur Utama
+- Animasi interaktif (hero, timeline pendidikan, hover card) menggunakan utilitas motion bersama.
+- Mode terang/gelap adaptif dengan tema kustom dan gradien bercahaya.
+- Halaman khusus untuk proyek, skill, pendidikan, blog teaser, serta formulir kontak profesional.
+- SEO bawaan: sitemap, robots, dan Open Graph image dinamis.
+- Integrasi Vercel untuk preview per branch dan pengiriman email via Resend.
 
-Deploy (Vercel)
-- Import the `web` directory as a project in Vercel.
-- Set `RESEND_API_KEY` in Project Settings (Environment Variables).
-- Push any changes to get Preview deployments per PR.
-# my-portofolio
+## 🧰 Teknologi
+- **Framework**: Next.js 15 (App Router) + TypeScript
+- **Styling**: Tailwind CSS v4, shadcn/ui, token desain kustom
+- **Animasi**: Framer Motion, variabel motion reusable
+- **Tooling**: ESLint, Turbopack build, Vercel Analytics
+
+## 🚀 Mulai Cepat
+```bash
+npm install        # pasang dependensi
+npm run dev        # jalankan server pengembangan
+npm run build      # build produksi
+npm start          # jalankan output produksi
+```
+
+### Variabel Lingkungan
+- `RESEND_API_KEY` (opsional) – aktifkan endpoint `/api/contact` untuk mengirim email.
+
+## 🗂️ Struktur Proyek
+```
+src/
+  app/
+    page.tsx                      # Beranda: hero, highlight proyek, CTA
+    about|education|projects/...  # Halaman konten utama
+    projects/[slug]/page.tsx      # Detail studi kasus proyek
+    api/contact/route.ts          # Handler email via Resend
+    sitemap.ts | robots.ts        # Output SEO standar
+  components/
+    layout/                       # Header, footer, shell layout
+    sections/                     # Hero, timeline, grid skill, dsb.
+    ui/animations/                # HoverCard, Reveal, Stagger, utilitas motion
+  config/                         # Metadata dan navigasi
+  data/                           # Konten statis (proyek, skill, edukasi)
+public/
+  images/                         # Aset proyek & profil
+  tools/                          # Logo stack teknologi
+  resume.pdf (opsional)           # Untuk tautan unduh CV
+```
+
+## 🔍 Komponen Penting
+- `HoverCard`, `Reveal`, `Stagger`: abstraksi Framer Motion dengan typing aman.
+- `education-vertical-timeline.tsx`: timeline beranimasi dengan efek glow.
+- `Glowing-Effect.tsx`: gradien atmosfer untuk hero dan CTA.
+
+## ✅ Pemeriksaan Kode
+```bash
+npm run lint   # lint Next.js + pemeriksaan tipe
+```
+
+## ☁️ Deploy ke Vercel
+1. Import repo di Vercel dan arahkan ke folder `web`.
+2. Tambahkan variabel lingkungan seperti `RESEND_API_KEY`.
+3. Setiap push memicu preview deployment; merge ke `main` untuk produksi.
+
+## 📅 Rencana Pengembangan
+- Integrasi konten MDX untuk blog atau studi kasus yang lebih kaya.
+- Menampilkan aktivitas GitHub dan testimoni klien.
+- Menambahkan pengujian aksesibilitas otomatis (Playwright/axe).
+
+---
+
+Website ini dibuat dan dikelola oleh **Dzaky**. Silakan fork, kembangkan, atau hubungi langsung melalui formulir kontak di situs.***
